@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+class Data {
+  static DateTime createdAt = DateTime.now();
+  static int counter = 0;
+}
+
 class FibonacciArguments {
   final String message;
   final int n;
@@ -14,7 +19,8 @@ class FibonacciArguments {
 int fibonacci(FibonacciArguments arguments) {
   final n = arguments.n;
   final message = arguments.message;
-
+  print("static count fibonacci ${Data.counter}");
+  print("hascode fibonacci  ${Data.createdAt.hashCode}");
   if (n < 2) {
     return n;
   }
@@ -30,11 +36,14 @@ class _ComputePageState extends State<ComputePage> {
   int number = 0;
 
   void onPressed() async {
+    Data.counter++;
     final result = await compute<FibonacciArguments, int>(
       fibonacci,
-      FibonacciArguments(40, "meedu.app"),
+      FibonacciArguments(1, "meedu.app"),
     );
     this.number = result;
+    print("hascode ${Data.createdAt.hashCode}");
+    print("static count ${Data.counter} ");
     setState(() {});
   }
 
